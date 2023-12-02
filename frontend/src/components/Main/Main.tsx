@@ -1,9 +1,10 @@
 import React from "react";
-import {useFormik} from "formik";
-import {Button, Card, Col, Divider, Flex, Grid, Input, Row, Typography} from "antd";
-import {Breadcrumb, Layout, Menu, theme} from 'antd';
+import {Divider, Flex, Layout, theme, Typography} from "antd";
 import Search from "antd/es/input/Search";
 import styles from "./Main.module.scss";
+import Stocks from "./Stocks/Stocks";
+import Carousel from "./Carousel/Carousel";
+import News from "./News/News";
 
 const {Title, Text} = Typography;
 
@@ -18,11 +19,11 @@ const Main: React.FC<MainPropsType> = (props) => {
         token: {colorBgContainer},
     } = theme.useToken();
     return (
-        <Layout className="layout">
+        <Layout className={styles.main}>
             <Sider collapsible collapsed={true}>
                 <div className="demo-logo-vertical"/>
             </Sider>
-            <Layout style={{padding: '10px 30px'}}>
+            <Layout className={styles.content} style={{padding: '33px 150px'}}>
                 <Flex gap={5} justify={"space-between"}>
                     <Search allowClear style={{width: 200}}/>
                     <Flex gap={10}>
@@ -34,18 +35,11 @@ const Main: React.FC<MainPropsType> = (props) => {
                 <Divider/>
 
                 <Content>
-                    <Row className={styles.list}>
-                        {['', '', '', '', '','', '', '', '', ''].map(() => {
-                            return <Col span={2}>
-                                <Card className={styles.card}>Талон в пивнуху</Card>
-                            </Col>
-                        })}
-                    </Row>
-                    <Flex gap={5}>
-                        <Card className={styles.card} bordered={true} size={"small"}>Дым</Card>
-                        <Card className={styles.card} bordered={true} size={"small"}>Дымоок</Card>
-                        <Card className={styles.card} bordered={true} size={"small"}>Зашол на посашок</Card>
-                    </Flex>
+                    <Stocks/>
+                    <Divider/>
+                    <Carousel />
+                    <div style={{paddingBottom: 18}}/>
+                    <News />
                 </Content>
                 <Footer style={{textAlign: 'center'}}>ООО Дымный Татар интертеймент</Footer>
             </Layout>

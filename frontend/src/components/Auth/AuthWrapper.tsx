@@ -25,6 +25,18 @@ const AuthWrapper: React.FC<any> = (props) => {
                         <Register setAuthForm={() => setType(TypeAuth.auth)}/>}
                 </Card>
             </Col>
+            <ul className={styles.particles}>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
         </Row>
     );
 };

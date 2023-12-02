@@ -3,6 +3,7 @@ import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import './App.css';
 import AuthWrapper from "./components/Auth/AuthWrapper";
 import Main from "./components/Main/Main";
+import Preview from "./components/Preview/Preview";
 
 function App() {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ function App() {
               {/*<Route path="profile" element={<Profile />} />*/}
           </Route>
           <Route path="/auth" element={<AuthWrapper />}/>
+          {/*<Route path="/preview" element={<Preview />}/>*/}
       </Routes>
   );
 }
