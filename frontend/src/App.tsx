@@ -1,25 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
 import './App.css';
+import AuthWrapper from "./components/Auth/AuthWrapper";
+import Main from "./components/Main/Main";
 
 function App() {
+    const navigate = useNavigate();
+    const location = useLocation().pathname;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Routes>
+          <Route path="/" element={<Main/>}>
+              {/*<Route path="events">*/}
+              {/*    <Route path="my" element={<EventList />} />*/}
+              {/*    <Route path="map" element={<EventMap />} />*/}
+              {/*    <Route index element={<EventList />} />*/}
+              {/*</Route>*/}
+              {/*<Route path="event">*/}
+              {/*    <Route path=":eventId" element={<EventPage />} />*/}
+              {/*    <Route path=":eventId/edit" element={<EventMaker />} />*/}
+              {/*    <Route path=":eventId/invite/:key" element={<Invite />} />*/}
+              {/*</Route>*/}
+              {/*<Route path="profile" element={<Profile />} />*/}
+          </Route>
+          <Route path="/auth" element={<AuthWrapper />}/>
+      </Routes>
   );
 }
 
