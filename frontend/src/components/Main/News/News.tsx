@@ -7,7 +7,7 @@ const News: FC = () => {
     return (
         <Space direction={"vertical"}>
             <Typography.Title level={2}>Лента</Typography.Title>
-            <Flex gap={"small"}>
+            <Flex gap={"middle"}>
                 <NewsItem />
                 <NewsItem />
                 <NewsItem />

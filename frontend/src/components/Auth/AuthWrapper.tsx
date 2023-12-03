@@ -18,8 +18,8 @@ const AuthWrapper: React.FC<any> = (props) => {
     }, [props.auth]);
 
     return (
-        <Row className={styles.container}>
-            <Col span={6} offset={9}>
+        <Row className={styles.container} justify={'center'} align={'middle'} >
+            <Col flex="1 1 450px">
                 <Card>
                     {type === TypeAuth.auth ? <Login setRegisterForm={() => setType(TypeAuth.register)}/> :
                         <Register setAuthForm={() => setType(TypeAuth.auth)}/>}
