@@ -25,7 +25,8 @@ def get_all_forecasts(db: Session):
 
 
 def update_forecast(id: int, period: ForecastPeriod, data: ForecastModel, db: Session):
-    forecast = db.query(ForecastBase).filter(ForecastBase.company_id == id and ForecastBase.period == period).first()
+    forecast = (db.query(ForecastBase)
+                .filter(ForecastBase.company_id == id, ForecastBase.period == period.value).first())
 
     forecast.price = data.price
     forecast.price_increase = data.price_increase
@@ -38,7 +39,8 @@ def update_forecast(id: int, period: ForecastPeriod, data: ForecastModel, db: Se
 
 
 def delete_forecast(id: int, period: ForecastPeriod, db: Session):
-    forecast = db.query(ForecastBase).filter(ForecastBase.company_id == id and ForecastBase.period == period).delete()
+    forecast = (db.query(ForecastBase)
+                .filter(ForecastBase.company_id == id, ForecastBase.period == period.value).delete())
 
     db.commit()
 
