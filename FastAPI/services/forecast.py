@@ -8,7 +8,7 @@ from dto.forecast import ForecastPeriod
 def add_forecast(data: ForecastModel, db: Session):
     forecast = ForecastBase(
         company_id=data.company_id,
-        period=data.period,
+        period=data.period.value,
         price=data.price,
         price_increase=data.price_increase
     )
@@ -24,9 +24,14 @@ def get_all_forecasts(db: Session):
     return db.query(ForecastBase).all()
 
 
-def update_forecast(id: int, period: ForecastPeriod, data: ForecastModel, db: Session):
+def update_forecast(data: ForecastModel, db: Session):
     forecast = (db.query(ForecastBase)
-                .filter(ForecastBase.company_id == id, ForecastBase.period == period.value).first())
+                .filter(ForecastBase.company_id == data.company_id)
+                .filter(ForecastBase.period == str(data.period.value))
+                .first())
+
+    if not forecast:
+        forecast = add_forecast(data, db)
 
     forecast.price = data.price
     forecast.price_increase = data.price_increase
@@ -38,9 +43,13 @@ def update_forecast(id: int, period: ForecastPeriod, data: ForecastModel, db: Se
     return forecast
 
 
-def delete_forecast(id: int, period: ForecastPeriod, db: Session):
-    forecast = (db.query(ForecastBase)
-                .filter(ForecastBase.company_id == id, ForecastBase.period == period.value).delete())
+def delete_forecast(db: Session, id: int, period: ForecastPeriod = None):
+    forecast = db.query(ForecastBase).filter(ForecastBase.company_id == id)
+
+    if period:
+        forecast = forecast.filter(ForecastBase.period == str(period.value))
+
+    forecast.delete()
 
     db.commit()
 
