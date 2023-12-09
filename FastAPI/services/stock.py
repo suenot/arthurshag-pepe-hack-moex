@@ -20,12 +20,12 @@ def get_all_stocks(db: Session):
     return db.query(StockBase).all()
 
 
-def get_stock(id: int, db: Session):
-    return db.query(StockBase).filter(StockBase.company_id == id).first()
+def get_stock(ticker: str, db: Session):
+    return db.query(StockBase).filter(StockBase.ticker == ticker).first()
 
 
 def add_stock(data: StockModel, db: Session):
-    stock = StockBase(company_id=data.company_id, price=data.price, price_increase=data.price_increase)
+    stock = StockBase(ticker=data.ticker, price=data.price, price_increase=data.price_increase)
 
     db.add(stock)
     db.commit()
@@ -35,7 +35,7 @@ def add_stock(data: StockModel, db: Session):
 
 
 def update_stock(data: StockModel, db: Session):
-    stock = db.query(StockBase).filter(StockBase.company_id == data.company_id).first()
+    stock = db.query(StockBase).filter(StockBase.ticker == data.ticker).first()
 
     if not stock:
         stock = add_stock(data, db)
@@ -86,7 +86,7 @@ def update_all_stocks(db: Session):
         price, price_increase = get_stock_data_by_ticker(company_data.ticker)
 
         update_stock(StockModel(**{
-                "company_id": company_data.id,
+                "ticker": company_data.ticker,
                 "price": price,
                 "price_increase": price_increase
             }), db)
@@ -125,19 +125,19 @@ def get_top_stocks(db: Session, stocks_type: StocksType, limit: int = None):
             "pricePercentage": round(stock.price_increase * 100, 1),
             "companyName": company.name,
             "companyIcon": company.icon,
-            "id": company.id
+            "id": company.ticker
         })
 
     return result
 
 
-def get_stock_with_forecasts(id: int, db: Session):
-    company = get_company(id, db)
+def get_stock_with_forecasts(ticker: str, db: Session):
+    company = get_company(ticker, db)
 
     if company is None:
         return
 
-    forecasts = db.query(ForecastBase).filter(ForecastBase.company_id == id).all()
+    forecasts = db.query(ForecastBase).filter(ForecastBase.ticker == ticker).all()
 
     forecast_dict = {}
 
@@ -155,7 +155,7 @@ def get_stock_with_forecasts(id: int, db: Session):
         }
 
     result = {
-        "id": id,
+        "id": ticker,
         "description": company.description,
         "forecast": forecast_dict,
         "companyName": company.name,

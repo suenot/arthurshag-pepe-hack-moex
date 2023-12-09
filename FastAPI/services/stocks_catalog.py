@@ -23,10 +23,10 @@ def get_stocks_catalog_page(db: Session, limit: int = None, page: int = None, se
     result = []
 
     for company in companies:
-        stock = get_stock(company.id, db)
+        stock = get_stock(company.ticker, db)
 
         result.append({
-            "id": company.id,
+            "id": company.ticker,
             "description": company.description,
             "companyName": company.name,
             "companyIcon": company.icon,

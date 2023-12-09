@@ -9,6 +9,6 @@ class StocksType(IntEnum):
 
 
 class Stock(BaseModel):
-    company_id: int
+    ticker: str
     price: float
     price_increase: float

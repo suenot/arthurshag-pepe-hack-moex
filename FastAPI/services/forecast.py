@@ -7,7 +7,7 @@ from dto.forecast import ForecastPeriod
 
 def add_forecast(data: ForecastModel, db: Session):
     forecast = ForecastBase(
-        company_id=data.company_id,
+        ticker=data.ticker,
         period=data.period.value,
         price=data.price,
         price_increase=data.price_increase
@@ -24,9 +24,9 @@ def get_all_forecasts(db: Session):
     return db.query(ForecastBase).all()
 
 
-def update_forecast(data: ForecastModel, db: Session):
+def insert_forecast(data: ForecastModel, db: Session):
     forecast = (db.query(ForecastBase)
-                .filter(ForecastBase.company_id == data.company_id)
+                .filter(ForecastBase.ticker == data.ticker)
                 .filter(ForecastBase.period == str(data.period.value))
                 .first())
 
@@ -43,8 +43,8 @@ def update_forecast(data: ForecastModel, db: Session):
     return forecast
 
 
-def delete_forecast(db: Session, id: int, period: ForecastPeriod = None):
-    forecast = db.query(ForecastBase).filter(ForecastBase.company_id == id)
+def delete_forecast(db: Session, ticker: str, period: ForecastPeriod = None):
+    forecast = db.query(ForecastBase).filter(ForecastBase.ticker == ticker)
 
     if period:
         forecast = forecast.filter(ForecastBase.period == str(period.value))

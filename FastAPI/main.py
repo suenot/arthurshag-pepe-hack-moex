@@ -20,5 +20,6 @@ app.include_router(ForecastRouter, prefix="/forecast")
 app.include_router(StockchartRouter, prefix="/stockchart")
 app.include_router(StocksCatalogRouter, prefix="/stocks-catalog")
 
+
 if __name__ == "__main__":
     uvicorn.run("main:app", reload=True)

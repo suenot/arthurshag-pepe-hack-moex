@@ -9,7 +9,7 @@ class ForecastPeriod(Enum):
 
 
 class Forecast(BaseModel):
-    company_id: int
-    period: str
+    ticker: str
+    period: ForecastPeriod
     price: float
     price_increase: float
