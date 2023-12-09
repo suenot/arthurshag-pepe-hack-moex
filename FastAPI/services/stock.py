@@ -160,8 +160,8 @@ def get_stock_with_forecasts(ticker: str, db: Session):
         "forecast": forecast_dict,
         "companyName": company.name,
         "companyIcon": company.icon,
-        "background": company.background,
-        "textColor": company.text_color
+        "background": company.background.split(": ")[-1],
+        "textColor": company.text_color.split(": ")[-1]
     }
 
     return result
