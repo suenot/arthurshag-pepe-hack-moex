@@ -4,8 +4,8 @@ from enum import Enum
 
 class ForecastPeriod(Enum):
     HOUR = "hour"
+    DAY = "day"
     WEEK = "week"
-    MONTH = "month"
 
 
 class Forecast(BaseModel):
