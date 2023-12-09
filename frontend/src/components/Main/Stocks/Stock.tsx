@@ -1,23 +1,30 @@
 import React, {FC} from 'react';
-import {Card, Col, Divider, Flex, Row, Typography} from "antd";
+import {Card, Divider, Flex, Typography} from "antd";
 import styles from "./Stocks.module.scss";
-import {RedditOutlined} from "@ant-design/icons";
+import {StockFeed} from "../../../types";
 
-
-interface PropsType {
-    id: number;
-    text: string;
-}
-
-const Stock: FC<PropsType> = ({id, text}) => {
+const Stock: FC<StockFeed> = ({price, pricePercentage, companyName, companyIcon}) => {
+    const changeIsPositive = pricePercentage > 0;
     return (
-        <Card className={styles.card} bordered={true} size={"small"} >
+        <Card className={styles.card} bordered={true} size={"small"}>
             <Flex vertical align={'center'}>
-                <Typography.Text strong><span>{text || 'Пивнуха'}</span> <Typography.Text type={'success'}>+ 1.2%</Typography.Text></Typography.Text>
+                <Typography.Text strong><span>{price || '0,00'}</span> <Typography.Text
+                    type={changeIsPositive ? 'success' : 'danger'}>{changeIsPositive && '+'} {pricePercentage}%</Typography.Text></Typography.Text>
                 <Divider style={{margin: '5px 0'}}/>
-                <Typography.Text>
-                    <RedditOutlined/> ГЗП
-                </Typography.Text>
+                <Flex gap={5} align={'center'} flex={"0 0 0"} style={{width: '100%', minWidth: 0}} justify={'center'}>
+                    <img alt="icon" src={companyIcon}
+                         style={{display: 'inline-block', width: 20, height: 20, borderRadius: '50%'}}/>
+                    <Typography.Text style={{
+                        verticalAlign: 'middle',
+                        gap: '5px',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                    }}>
+                        {companyName}
+                    </Typography.Text>
+                </Flex>
+
             </Flex>
         </Card>
     );

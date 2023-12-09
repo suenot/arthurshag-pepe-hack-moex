@@ -1,52 +1,57 @@
-import React, {FC, useState} from 'react';
-import {Flex, Radio, RadioChangeEvent, Space} from "antd";
+import React, {FC, useEffect, useState} from 'react';
+import {Button, Flex, Space} from "antd";
 import styles from "./Stocks.module.scss";
 import Stock from "./Stock";
+import {mainApi} from "../../../api/Api";
+import {StockFeed} from "../../../types";
+
+const styleBtn: typeof Button.arguments['styles'] = {
+    textAlign: 'left',
+    fontWeight: 'bold',
+    fontSize: '12px',
+    lineHeight: 'normal'
+};
 
 const Stocks: FC = () => {
-    const array = [
-        {
-            icon: '',
-            text: 'Пивнуха'
-        }
-    ];
+    const [stocksData, setStocksData] = useState<StockFeed[]>([]);
+    const [typeStocks, setTypeStocks] = useState<number>(0);
+    useEffect(() => {
+        mainApi.getStocks(typeStocks).then((data) => {
+            setStocksData([...data, ...data,...data,] || [] as StockFeed[]);
+        });
+    }, [typeStocks])
 
-    const options = [
-        {label: 'Взлеты дня', value: 'Взлеты дня'},
-        {label: 'Падения дня', value: 'Падения дня'},
-        {label: 'Взлеты дня1', value: 'Взлеты дня1'},
-    ];
-
-    for (let i = 0; i < 22; i++) {
-        array.push({...array[0]});
-    }
-
-    const [value1, setValue1] = useState('Apple');
-
-    const onChange1 = ({target: {value}}: RadioChangeEvent) => {
-        console.log('radio1 checked', value);
-        setValue1(value);
-    };
     return (
         <>
             <div className={styles.listWrapper}>
-                <Space className={styles.list}>
-                    {array.map((value, index) => {
-                        return <>
-                            <Stock id={index} {...value}/>
-                        </>
-                    })}
-                </Space>
+                <Flex gap={5} wrap={'nowrap'} vertical>
+                    <Button style={styleBtn} danger={typeStocks === 0} onClick={() => setTypeStocks(0)}>
+                        Взлеты
+                    </Button>
+                    <Button danger={typeStocks === 1} style={styleBtn} onClick={() => setTypeStocks(1)}>
+                        Падения
+                    </Button>
+                    <Button style={styleBtn} danger={typeStocks === 2} onClick={() => setTypeStocks(2)}>
+                        Рекомендованные
+                    </Button>
+
+                </Flex>
+                <div className={styles.listWrapperHidden}>
+                    <Space className={styles.list}>
+                        {stocksData.map((value) => {
+                            return <>
+                                <Stock key={value.company_id}{...value}/>
+                            </>
+                        })}
+                        {stocksData.map((value) => {
+                            return <>
+                                <Stock key={value.company_id} {...value}/>
+                            </>
+                        })}
+                    </Space>
+                </div>
             </div>
-            <Flex gap={5} wrap={'nowrap'}>
-                {/*<Radio.Group*/}
-                {/*    options={options}*/}
-                {/*    onChange={onChange1}*/}
-                {/*    value={value1}*/}
-                {/*    optionType="button"*/}
-                {/*/>*/}
-                {/*<Card className={styles.card} bordered={true} size={"small"}>Зашол на посашок</Card>*/}
-            </Flex>
+
         </>
     );
 };

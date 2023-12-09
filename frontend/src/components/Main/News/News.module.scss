@@ -1,0 +1,17 @@
+.newsItem {
+  &:hover {
+    border: 1px solid red;
+  }
+
+  //animation: 35s slide infinite linear;
+}
+
+
+//@keyframes slide {
+//  from {
+//    transform: translateX(0);
+//  }
+//  to {
+//    transform: translateX(-100%);
+//  }
+//}

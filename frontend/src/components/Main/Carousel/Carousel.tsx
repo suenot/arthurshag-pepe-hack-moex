@@ -1,64 +1,92 @@
 import React, {FC} from 'react';
-import {Carousel as AntCarousel, Flex, Typography} from 'antd';
+import {Button, Carousel as AntCarousel, Flex, Image, Typography} from 'antd';
 import Search from "antd/es/input/Search";
+import './Carousels.scss';
+import img2 from './2.jpg';
+import img3 from './3.jpg';
+import {useNavigate} from "react-router-dom";
 
 const contentStyle: React.CSSProperties = {
-    margin: 0,
+    margin: '0 auto',
     height: '300px',
     color: '#fff',
     textAlign: 'center',
-    background: '#000000',
-    padding: '10px 100px',
+
+    padding: '10px 50px',
+    maxWidth: '1300px',
 };
 
+// let data = ['❅', '❅', '❆', '❄','❅', '❆', '❄','❄','❅', '❆', '❄','❄'];
+// data = [...data,...data];
+
 const Carousel: FC = () => {
-    const onChange = (currentSlide: number) => {
-        console.log(currentSlide);
-    };
+    const navigate = useNavigate();
+
+    function onClick(): void {
+        navigate(`/bot`);
+    }
 
     return (
-        <AntCarousel afterChange={onChange} style={{borderRadius: 10, overflow: 'hidden'}}>
-            <div>
-                <Flex align={'center'} justify={'space-between'} style={contentStyle}>
-                    <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}} >
-                        Узнай прогноз цен акций компаний, <br />
-                        используя <Typography.Text type={'danger'} strong
-                                                   style={{fontSize: '1em'}}>AI</Typography.Text> биржу.
-                    </Typography.Paragraph>
-                    <Search width={300} style={{maxWidth: 400}}/>
-                </Flex>
-            </div>
-            <div>
-                <Flex align={'center'} justify={'space-between'} style={contentStyle}>
-                    <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}} >
-                        Узнай прогноз цен акций компаний, <br />
-                        используя <Typography.Text type={'danger'} strong
-                                                   style={{fontSize: '1em'}}>AI</Typography.Text> биржу.
-                    </Typography.Paragraph>
-                    <Search width={300} style={{maxWidth: 400}}/>
-                </Flex>
-            </div>
-            <div>
-                <Flex align={'center'} justify={'space-between'} style={contentStyle}>
-                    <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}} >
-                        Узнай прогноз цен акций компаний, <br />
-                        используя <Typography.Text type={'danger'} strong
-                                                   style={{fontSize: '1em'}}>AI</Typography.Text> биржу.
-                    </Typography.Paragraph>
-                    <Search width={300} style={{maxWidth: 400}}/>
-                </Flex>
-            </div>
-            <div>
-                <Flex align={'center'} justify={'space-between'} style={contentStyle}>
-                    <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}} >
-                        Узнай прогноз цен акций компаний, <br />
-                        используя <Typography.Text type={'danger'} strong
-                                                   style={{fontSize: '1em'}}>AI</Typography.Text> биржу.
-                    </Typography.Paragraph>
-                    <Search width={300} style={{maxWidth: 400}}/>
-                </Flex>
-            </div>
-        </AntCarousel>
+        <div className={'containerSnow'}>
+            <AntCarousel style={{borderRadius: 10, overflow: 'hidden', background: '#000000'}}>
+                <div>
+                    <Flex align={'center'} justify={'space-between'} style={contentStyle}>
+                        <Typography.Paragraph
+                            style={{color: 'white', fontSize: '1.5em', textAlign: "left", marginBottom: 0}}>
+                            Надежные инвестиции с ботом от <Typography.Text type={'danger'} strong
+                                                                            style={{fontSize: '1em'}}>AI
+                            Биржа</Typography.Text>
+                        </Typography.Paragraph>
+                        <div style={{
+                            width: '37.264px',
+                            height: '360.432px',
+                            transform: 'rotate(11.913deg)',
+                            flexShrink: 0,
+                            background: 'white',
+                            zIndex: 1
+                        }}/>
+                        <Button style={{fontSize: 20, width: 250, height: 58, fontWeight: 'bold'}} onClick={onClick}>
+                            Перейти на бота
+                        </Button>
+                    </Flex>
+                </div>
+                <div>
+                    <Flex align={'center'} justify={'space-between'}
+                          style={{...contentStyle, maxWidth: 'max-content', padding: 0, paddingLeft: 50}}>
+                        <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}}>
+                            Оптимизируй свои инвестиции с нашим торговым ботом, созданным искусственным интеллектом!
+                            Доверь торговлю на бирже надежному алгоритму, который работает для тебя 24/7
+                        </Typography.Paragraph>
+                        <div style={{
+                            width: '96.083px',
+                            height: '370.161px',
+                            transform: 'rotate(11.913deg)',
+                            background: 'red',
+                            zIndex: 1
+                        }}/>
+                        <Image src={img2} preview={false}/>
+                    </Flex>
+                </div>
+                <div>
+                    <Flex align={'center'} justify={'space-between'}
+                          style={{...contentStyle, maxWidth: 'max-content', padding: 0, paddingLeft: 50}}>
+                        <Typography.Paragraph style={{color: 'white', fontSize: '1.5em', textAlign: "left"}}>
+                            Получай точные прогнозы акций в режиме реального времени от искусственного интеллекта. Наш
+                            сайт предоставляет уникальные аналитические данные для успешного трейдинга на финансовых
+                            рынках.
+                        </Typography.Paragraph>
+                        <div style={{
+                            width: '96.083px',
+                            height: '370.161px',
+                            transform: 'rotate(11.913deg)',
+                            background: 'red',
+                            zIndex: 1
+                        }}/>
+                        <Image src={img3} preview={false}/>
+                    </Flex>
+                </div>
+            </AntCarousel>
+        </div>
     );
 };
 
