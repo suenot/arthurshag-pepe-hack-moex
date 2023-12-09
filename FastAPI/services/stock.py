@@ -99,7 +99,7 @@ def get_top_stocks(db: Session, stocks_type: StocksType, limit: int = None):
         joined_result = (
             db.query(StockBase, CompanyBase)
             .select_from(StockBase)
-            .filter(StockBase.price_increase >= 0.1)
+            .filter(StockBase.price_increase > 0)
             .order_by(desc(StockBase.price_increase))
             .join(CompanyBase)
             .limit(limit)
@@ -110,7 +110,7 @@ def get_top_stocks(db: Session, stocks_type: StocksType, limit: int = None):
         joined_result = (
             db.query(StockBase, CompanyBase)
             .select_from(StockBase)
-            .filter(StockBase.price_increase <= 0.1)
+            .filter(StockBase.price_increase < 0)
             .order_by(StockBase.price_increase)
             .join(CompanyBase)
             .limit(limit)
@@ -142,11 +142,11 @@ def get_stock_with_forecasts(ticker: str, db: Session):
     forecast_dict = {}
 
     # БАЗИРОВАННЫЕ ПРОГНОЗЫ
-    for period in ForecastPeriod:
-        forecast_dict[period] = {
-            "price": randint(1, 2000),
-            "changePercentage": randint(0, 100)
-        }
+    # for period in ForecastPeriod:
+    #     forecast_dict[period] = {
+    #         "price": randint(1, 2000),
+    #         "changePercentage": randint(0, 100)
+    #     }
 
     for forecast in forecasts:
         forecast_dict[forecast.period] = {
