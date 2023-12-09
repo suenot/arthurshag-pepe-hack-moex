@@ -27,7 +27,7 @@ def get_company_data_by_ticker(ticker: str):
     name = soup.find("span", class_="SecurityHeader__showName_iw6qC").text
 
     bg_div = soup.find("div", class_="SecurityHeader__wrapper_nrfiS")["style"]
-    background, text_color = [x.strip() for x in bg_div.split(";")[:2]]
+    background, text_color = [x.split(":")[-1].strip() for x in bg_div.split(";")[:2]]
 
     return icon, description, name, background, text_color
 

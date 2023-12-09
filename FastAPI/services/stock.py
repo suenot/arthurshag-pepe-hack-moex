@@ -99,7 +99,7 @@ def get_top_stocks(db: Session, stocks_type: StocksType, limit: int = None):
         joined_result = (
             db.query(StockBase, CompanyBase)
             .select_from(StockBase)
-            .filter(StockBase.price_increase > 0)
+            .filter(StockBase.price_increase >= 0.1)
             .order_by(desc(StockBase.price_increase))
             .join(CompanyBase)
             .limit(limit)
@@ -110,7 +110,7 @@ def get_top_stocks(db: Session, stocks_type: StocksType, limit: int = None):
         joined_result = (
             db.query(StockBase, CompanyBase)
             .select_from(StockBase)
-            .filter(StockBase.price_increase < 0)
+            .filter(StockBase.price_increase <= 0.1)
             .order_by(StockBase.price_increase)
             .join(CompanyBase)
             .limit(limit)
@@ -160,7 +160,8 @@ def get_stock_with_forecasts(ticker: str, db: Session):
         "forecast": forecast_dict,
         "companyName": company.name,
         "companyIcon": company.icon,
-        "background": company.background
+        "background": company.background,
+        "textColor": company.text_color
     }
 
     return result
