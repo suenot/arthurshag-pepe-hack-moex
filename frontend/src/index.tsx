@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
+import {ConfigProvider} from 'antd';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -11,7 +11,24 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App/>
+            <ConfigProvider
+                theme={{
+                    "token": {
+                        "colorPrimary": "#e50d0d",
+                        "colorInfo": "#000000",
+                        "colorSuccess": "#06AB03",
+                        "colorWarning": "#ffd176",
+                        "colorError": "#ff0002",
+                        "fontSize": 16,
+                        "sizeStep": 4,
+                        "sizeUnit": 4,
+                        "borderRadius": 10,
+                        // fontFamily: 'Gilroy',
+                    }
+                }}
+            >
+                <App/>
+            </ConfigProvider>
         </BrowserRouter>
     </React.StrictMode>
 );
