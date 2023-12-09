@@ -1,3 +1,4 @@
+import pandas as pd
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
 from moexalgo import Ticker
@@ -17,6 +18,10 @@ from random import randint
 
 def get_all_stocks(db: Session):
     return db.query(StockBase).all()
+
+
+def get_stock(id: int, db: Session):
+    return db.query(StockBase).filter(StockBase.company_id == id).first()
 
 
 def add_stock(data: StockModel, db: Session):
@@ -50,12 +55,19 @@ def get_stock_data_by_ticker(ticker: str):
 
     datetime_now = datetime.now()
 
-    if datetime_now.hour < 10:
-        date_iso = (date.today() - timedelta(days=1)).isoformat()
+    if datetime_now.weekday() > 4:
+        sub_days = datetime_now.weekday() - 4
+    elif datetime_now.hour < 10:
+        sub_days = 1
     else:
-        date_iso = date.today().isoformat()
+        sub_days = 0
+
+    date_iso = (date.today() - timedelta(days=sub_days)).isoformat()
 
     candles = ticker_data.candles(date=date_iso, period='D')
+
+    if not isinstance(candles, pd.DataFrame):
+        candles = pd.DataFrame(candles)
 
     price = 0
     price_increase = 0
