@@ -1,6 +1,5 @@
 import React, {FC} from 'react';
 import {Button, Carousel as AntCarousel, Flex, Image, Typography} from 'antd';
-import Search from "antd/es/input/Search";
 import './Carousels.scss';
 import img2 from './2.jpg';
 import img3 from './3.jpg';
@@ -16,9 +15,6 @@ const contentStyle: React.CSSProperties = {
     maxWidth: '1300px',
 };
 
-// let data = ['❅', '❅', '❆', '❄','❅', '❆', '❄','❄','❅', '❆', '❄','❄'];
-// data = [...data,...data];
-
 const Carousel: FC = () => {
     const navigate = useNavigate();
 
@@ -27,8 +23,8 @@ const Carousel: FC = () => {
     }
 
     return (
-        <div className={'containerSnow'}>
-            <AntCarousel style={{borderRadius: 10, overflow: 'hidden', background: '#000000'}}>
+        <div className={'-'}>
+            <AntCarousel className={'gradient-background'} style={{borderRadius: 10, overflow: 'hidden'}}>
                 <div>
                     <Flex align={'center'} justify={'space-between'} style={contentStyle}>
                         <Typography.Paragraph
@@ -38,7 +34,7 @@ const Carousel: FC = () => {
                             Биржа</Typography.Text>
                         </Typography.Paragraph>
                         <div style={{
-                            width: '37.264px',
+                            width: '75.264px',
                             height: '360.432px',
                             transform: 'rotate(11.913deg)',
                             flexShrink: 0,
@@ -58,9 +54,9 @@ const Carousel: FC = () => {
                             Доверь торговлю на бирже надежному алгоритму, который работает для тебя 24/7
                         </Typography.Paragraph>
                         <div style={{
-                            width: '96.083px',
+                            width: '200.083px',
                             height: '370.161px',
-                            transform: 'rotate(11.913deg)',
+                            transform: 'rotate(11.913deg) translateX(50%)',
                             background: 'red',
                             zIndex: 1
                         }}/>
@@ -76,9 +72,9 @@ const Carousel: FC = () => {
                             рынках.
                         </Typography.Paragraph>
                         <div style={{
-                            width: '96.083px',
+                            width: '200.083px',
                             height: '370.161px',
-                            transform: 'rotate(11.913deg)',
+                            transform: 'rotate(11.913deg) translateX(50%)',
                             background: 'red',
                             zIndex: 1
                         }}/>

@@ -17,7 +17,9 @@ const Stocks: FC = () => {
     const [typeStocks, setTypeStocks] = useState<number>(0);
     useEffect(() => {
         mainApi.getStocks(typeStocks).then((data) => {
-            setStocksData([...data, ...data,...data,] || [] as StockFeed[]);
+            if (data) {
+                setStocksData(data.length < 7 ? [...data, ...data, ...data] : data as StockFeed[]);
+            }
         });
     }, [typeStocks])
 
@@ -34,7 +36,6 @@ const Stocks: FC = () => {
                     <Button style={styleBtn} danger={typeStocks === 2} onClick={() => setTypeStocks(2)}>
                         Рекомендованные
                     </Button>
-
                 </Flex>
                 <div className={styles.listWrapperHidden}>
                     <Space className={styles.list}>

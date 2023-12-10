@@ -57,11 +57,13 @@ const Layout: React.FC<PropsType> = () => {
             <LayoutAnt className={styles.content}
                        style={{padding: '33px 50px', paddingLeft: 250, margin: '0 auto', maxWidth: '1920px'}}>
                 <Flex gap={5} justify={"space-between"}>
-                    {location !== '/stock-catalog' ?
+                    {
+                        location !== '/stock-catalog' ?
                         <a href={'https://www.youtube.com/watch?v=ykgqawluo5E'} style={{maxWidth: 350, width:'100%'}}><Search allowClear
                                                                                         style={{maxWidth: 350}}
                                                                                         placeholder={'Введите поиск'}/></a> :
-                        <div />}
+                        <div />
+                    }
 
                     <Flex gap={30} align={'center'}>
                         <Typography style={{fontSize: 16, fontWeight: 400}}>{date.toLocaleString('ru', {
@@ -78,8 +80,7 @@ const Layout: React.FC<PropsType> = () => {
                         <Flex align={'center'} gap={16}>
                             <Avatar
                                 size={34}
-                                src={"https://resources.cdn-kaspi.kz/shop/media" +
-                                "s/sys_master/images/images/he5/h42/49528671633438/heineken-pivo-svetloe-5-5-l-104208369-1.jpg"}/>
+                                src={"https://img2.fonwall.ru/o/lp/muzhchina-stil-kostyum.jpg"}/>
                             <Typography style={{fontSize: 16, fontWeight: 'bold'}}>Илья Нестеров</Typography>
                         </Flex>
                     </Flex>

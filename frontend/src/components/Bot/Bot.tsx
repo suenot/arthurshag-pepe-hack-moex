@@ -15,7 +15,6 @@ const Bot: FC = () => {
                       бот</Typography.Title>
               }
               style={{boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)', padding: 0}}
-            // headStyle={{padding: 0}}
               bodyStyle={{padding: '20px 64px'}}
         >
 

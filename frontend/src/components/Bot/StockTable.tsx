@@ -4,11 +4,11 @@ import type {ColumnsType} from 'antd/es/table';
 import {useNavigate} from "react-router-dom";
 
 interface DataType {
-    key: string;
-    name: string;
-    age: number;
-    address: string;
-    tags: string[];
+    id: string;
+    companyName: string;
+    count: number;
+    buyPrice: number;
+    salePrice: number;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -18,7 +18,7 @@ const columns: ColumnsType<DataType> = [
         key: 'company',
         className: 'styles.row',
         render: (text, record) => <div>
-            Сбер
+            {record.companyName}
         </div>,
     },
     {
@@ -27,16 +27,7 @@ const columns: ColumnsType<DataType> = [
         key: 'count',
         className: 'styles.row',
         render: (text, record) => <div>
-            100
-        </div>,
-    },
-    {
-        title: <div>Кол-во</div>,
-        dataIndex: 'count',
-        key: 'count',
-        className: 'styles.row',
-        render: (text, record) => <div>
-            100
+            {record.count}
         </div>,
     },
     {
@@ -45,7 +36,7 @@ const columns: ColumnsType<DataType> = [
         key: 'purchasePrice',
         className: 'styles.row',
         render: (text, record) => <div>
-            100
+            {record.buyPrice}
         </div>,
     },
     {
@@ -54,47 +45,47 @@ const columns: ColumnsType<DataType> = [
         key: 'currentPrice',
         className: 'styles.row',
         render: (text, record) => <div>
-            100
+            {record.salePrice}
         </div>,
     },
 ];
 
 const data: DataType[] = [
     {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
+        id: '1',
+        companyName: 'СБЕР',
+        count: 32,
+        buyPrice: 100,
+        salePrice: 96,
     },
     {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
+        id: '2',
+        companyName: 'ARFLT',
+        count: 250,
+        buyPrice: 572,
+        salePrice: 455,
     },
     {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
+        id: '3',
+        companyName: 'Yandex',
+        count: 33,
+        buyPrice: 2178,
+        salePrice: 1964,
     },
     {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
+        id: '4',
+        companyName: 'MOEX',
+        count: 856,
+        buyPrice: 500,
+        salePrice: 500000,
+    }
 ];
 
 const StockTable: React.FC = () => {
     const navigate = useNavigate();
 
     function onClick(): void {
-        navigate(`/card`);
+        // navigate(`/card`);
     }
 
     return <TableAnt pagination={false} onRow={(record, rowIndex) => {

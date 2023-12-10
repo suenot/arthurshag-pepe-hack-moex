@@ -4,7 +4,7 @@ import styles from "./Stocks.module.scss";
 import {StockFeed} from "../../../types";
 
 const Stock: FC<StockFeed> = ({price, pricePercentage, companyName, companyIcon}) => {
-    const changeIsPositive = pricePercentage > 0;
+    const changeIsPositive = pricePercentage >= 0;
     return (
         <Card className={styles.card} bordered={true} size={"small"}>
             <Flex vertical align={'center'}>
