@@ -5,6 +5,43 @@ import pandas as pd
 import requests
 
 
+# backtest
+############################################################
+
+def start_forecast_backtest(backtest):
+    tickers = ['AFLT', 'BANE', 'DSKY', 'FEES', 'GAZP', 'PHOR', 'POSI', 'SBER', 'YNDX', 'MTLR']
+
+    while True:
+        if backtest.get_new_data_was_adedd():
+            for ticker in tickers:
+                data = load_data_for_forecast_backtest(ticker, backtest)
+                do_forecat(ticker, None, data=data)
+                backtest.set_new_data_was_adedd(False)
+                backtest.forecast_was_adedd = True
+
+def load_data_for_forecast_backtest(ticker_name, backtest):
+    tradestats = backtest.get_tradestats()
+    tradestats = tradestats[tradestats.secid == ticker_name]
+    tradestats.drop(columns='secid', inplace=True)
+
+    orderstats = backtest.get_orderbook()
+    orderstats = orderstats[orderstats.secid == ticker_name].tail(1)
+    orderstats.drop(columns='secid', inplace=True)
+
+    obstats = backtest.get_obstats()
+    obstats = obstats[obstats.secid == ticker_name].tail(1)
+    obstats.drop(columns=['secid', 'val_b', 'val_s', 'vol_b', 'vol_s'], inplace=True)
+
+    df = tradestats.merge(orderstats, on=['ts'], how='left')
+    df = df.merge(obstats, on=['ts'], how='left')
+
+    return df
+
+############################################################
+
+
+
+
 def start_forecast():
     tickers = ['AFLT', 'BANE', 'DSKY', 'FEES', 'GAZP', 'PHOR', 'POSI', 'SBER', 'YNDX', 'MTLR']
     is_start = {ticker: True for ticker in tickers}
@@ -30,15 +67,18 @@ def new_data_was_added(ticker_name, prev_datetime):
     return last_record_time != prev_datetime.time()
 
 
-def do_forecat(ticker_name, cur_datetime):
-    df = load_data_for_forecast(ticker_name, cur_datetime.date())
+def do_forecat(ticker_name, cur_datetime=None, data=None):
+    if data is not None:
+        df = data
+    else:
+        df = load_data_for_forecast(ticker_name, cur_datetime.date())
+
     cur_datetime = df.ts.values[-1]
 
     df = add_features(df)
 
     pred_h, pred_d, pred_w = get_forecast(df.values[-1], ticker_name)
 
-    print(pred_h, pred_d, pred_w)
     save_forecast(ticker_name, [pred_h, pred_d, pred_w], df.pr_close.values[-1])
 
     return cur_datetime
@@ -142,18 +182,18 @@ def add_features(df):
 
 
 def get_forecast(df, ticker_name):
-    with open(f"models/hourly_models/model_{ticker_name}.pkl", 'rb') as file:
+    with open(f"./forecasts/models/hourly_models/model_{ticker_name}.pkl", 'rb') as file:
         model = pkl.load(file)
     pred_h = model.predict(df)
 
-    with open(f"models/daily_models/model_{ticker_name}.pkl", 'rb') as file:
+    with open(f"./forecasts/models/daily_models/model_{ticker_name}.pkl", 'rb') as file:
         model = pkl.load(file)
     pred_d = model.predict(df)
 
-    with open(f"models/weekly_models/model_{ticker_name}.pkl", 'rb') as file:
+    with open(f"./forecasts/models/weekly_models/model_{ticker_name}.pkl", 'rb') as file:
         model = pkl.load(file)
     pred_w = model.predict(df)
-
+    # print(ticker_name, pred_h, pred_d, pred_w)
     return pred_h, pred_d, pred_w
 
 
@@ -169,6 +209,7 @@ def save_forecast(ticker_name, preds, cur_pris):
         }
 
         requests.post(f'http://127.0.0.1:8000/forecast/{ticker_name}', json=json_data)
+
 
 
 
